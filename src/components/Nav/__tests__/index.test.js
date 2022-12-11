@@ -37,14 +37,16 @@ describe("emoji is visible", () => {
 });
 
 // test for visible links
-// declare test's purpose in the describe section 
+// declare test's purpose in the describe section
 describe("inserts text into the links", () => {
-    // Arrange
-  const { getByTestId } = render(<Nav />);
+  // Arrange
+  it("inserts text into the links", () => {
+    const { getByTestId } = render(<Nav />);
 
-  // Assert
-  // use getByTestId method to make sure correct elements are tested 
-  // verify that text content is being inserted into <a> tags to links are vis to users
-  expect(getByTestId("link")).toHaveTextContent("Oh Snap!");
-  expect(getByTestId("about")).toHaveTextContent("About me");
+    // Assert
+    // use getByTestId method to make sure correct elements are tested
+    // verify that text content is being inserted into <a> tags to links are vis to users
+    expect(getByTestId("link")).toHaveTextContent("Oh Snap!");
+    expect(getByTestId("about")).toHaveTextContent("About me");
+  });
 });
