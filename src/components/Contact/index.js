@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { validateEmail } from "../../utils/helpers";
 
 // create ContactForm function
 function ContactForm() {
@@ -8,19 +9,65 @@ function ContactForm() {
     message: "",
   });
   const { name, email, message } = formState;
+  const [errorMessage, setErrorMessage] = useState("");
 
   //define the handleChange function -- syncs internal state of the component formState w/ user input from the DOM
   // the onChange event listner will ensure handleCHange function fires whenever somethihng typed into input field for name (each keystroke!)
-  function handleChange(e) {
-    setFormState({ ...formState, [e.target.name]: e.target.value });
-  }
+  // function handleChange(e) {
+  //   //validation of form data
+  //   if (e.target.name === "email") {
+  //     const isValid = validateEmail(e.target.value);
+  //     console.log(isValid);
+  //     // isValid conditional statement
+  //     if (!isValid) {
+  //       setErrorMessage("Your email is invalid.");
+  //     } else {
+  //       setErrorMessage("");
+  //     }
+  //     if (!e.target.value.length) {
+  //       setErrorMessage(`${e.target.name} is required.`);
+  //     } else {
+  //       setErrorMessage("");
+  //     }
+  //   }
+  //   console.log("errorMessage", errorMessage);
+  // }
+
+  // setFormState({ ...formState, [e.target.name]: e.target.value });
+
   //   console.log(formState);
 
   // function that will handle submission of form data
-  function handleSubmit(e) {
+  // function handleSubmit(e) {
+  //   e.preventDefault();
+  //   console.log(formState);
+  // }
+
+  const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(formState);
-  }
+    if (!errorMessage) {
+      setFormState({ ...formState, [e.target.name]: e.target.value });
+      console.log("Form", formState);
+    }
+  };
+
+  const handleChange = (e) => {
+    if (e.target.name === "email") {
+      const isValid = validateEmail(e.target.value);
+      if (!isValid) {
+        setErrorMessage("Your email is invalid.");
+      } else {
+        setErrorMessage("");
+      }
+    } else {
+      if (!e.target.value.length) {
+        setErrorMessage(`${e.target.name} is required.`);
+      } else {
+        setErrorMessage("");
+      }
+    }
+    console.log("errorMessage", errorMessage);
+  };
 
   // JSX
   return (
@@ -33,7 +80,7 @@ function ContactForm() {
             type="text"
             name="name"
             defaultValue={name}
-            onChange={handleChange}
+            onBlur={handleChange}
           />
         </div>
         <div>
@@ -42,7 +89,7 @@ function ContactForm() {
             type="email"
             name="email"
             defaultValue={email}
-            onChange={handleChange}
+            onBlur={handleChange}
           />
         </div>
         <div>
@@ -51,9 +98,14 @@ function ContactForm() {
             name="message"
             rows="5"
             defaultValue={message}
-            onChange={handleChange}
+            onBlur={handleChange}
           />
         </div>
+        {errorMessage && (
+          <div>
+            <p className="error-text">{errorMessage}</p>
+          </div>
+        )}
         <button type="submit">Submit</button>
       </form>
     </section>
