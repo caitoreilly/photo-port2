@@ -1,7 +1,11 @@
 import React, { useState } from "react";
+//import Modal component
+import Modal from "../Modal";
 
-// destructure props 
+// destructure props
 function PhotoList({ category }) {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   //create array of photos - with objects w/ titles & descriptions
   const [photos] = useState([
     {
@@ -121,18 +125,31 @@ function PhotoList({ category }) {
   ]);
 
   // go thru each photo in the photos array trying to find every photo that matches the category that was selected by user
-  // if photo matches the condition, it is returned in an array & assigned to currentPhotos 
-  // then we can map the currentPhotos array to render each photo that matches the category selected by the user 
+  // if photo matches the condition, it is returned in an array & assigned to currentPhotos
+  // then we can map the currentPhotos array to render each photo that matches the category selected by the user
   const currentPhotos = photos.filter((photo) => photo.category === category);
+
+  const [currentPhoto, setCurrentPhoto] = useState();
+
+  // define toggleModal function
+  const toggleModal = (image, i) => {
+    // current photo
+    setCurrentPhoto({ ...image, index: i });
+    setIsModalOpen(!isModalOpen);
+  };
 
   return (
     <div>
+      {isModalOpen && (
+        <Modal currentPhoto={currentPhoto} onClose={toggleModal} />
+      )}
       <div className="flex-row">
         {currentPhotos.map((image, i) => (
           <img
             src={require(`../../assets/small/${category}/${i}.jpg`)}
             alt={image.name}
             className="img-thumbnail mx-1"
+            onClick={() => toggleModal(image, i)}
             key={image.name}
           />
         ))}
