@@ -10,6 +10,8 @@ const categories = [
 ];
 const mockCurrentCategory = jest.fn();
 const mockSetCurrentCategory = jest.fn();
+const mockContactSelected = jest.fn();
+const mockSetContactSelected = jest.fn();
 
 // configure testing environment by adding cleanup utility & describe function
 // describe function declares what the test suite will be testing
@@ -24,6 +26,8 @@ describe("Nav component", () => {
         categories={categories}
         setCurrentCategory={mockSetCurrentCategory}
         currentCategory={mockCurrentCategory}
+        contactSelected={mockContactSelected}
+        setContactSelected={mockSetContactSelected}
       />
     );
   });
@@ -35,6 +39,8 @@ describe("Nav component", () => {
         categories={categories}
         setCurrentCategory={mockSetCurrentCategory}
         currentCategory={mockCurrentCategory}
+        contactSelected={mockContactSelected}
+        setContactSelected={mockSetContactSelected}
       />
     );
     //assert value comparsion
@@ -52,6 +58,8 @@ describe("emoji is visible", () => {
         categories={categories}
         setCurrentCategory={mockSetCurrentCategory}
         currentCategory={mockCurrentCategory}
+        contactSelected={mockContactSelected}
+        setContactSelected={mockSetContactSelected}
       />
     );
     // Assert (evaluation)
@@ -70,6 +78,8 @@ describe("inserts text into the links", () => {
         categories={categories}
         setCurrentCategory={mockSetCurrentCategory}
         currentCategory={mockCurrentCategory}
+        contactSelected={mockContactSelected}
+        setContactSelected={mockSetContactSelected}
       />
     );
 
